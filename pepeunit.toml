@@ -1,0 +1,72 @@
+[general]
+name = "BME280 and MH-Z19B"
+description = "Считывает температуру, давление и влажность с датчика `BME280`/`BMP280` по `I2C`, а также концентрацию `CO2` с датчика `MH-Z19B` по `UART`. Публикует показания в `MQTT` топики. Поддерживает команду калибровки нулевой точки `CO2` датчика"
+language = "Micropython"
+hardware = ["esp32", "esp32c3", "esp32s3", "BME280", "BMP280", "MH-Z19B"]
+firmware = [
+  {name = "ESP32_GENERIC-v1.27.0-PEPEUNIT-v1.1.1.bin", link = "https://git.pepemoss.com/api/v4/projects/296/packages/generic/firmware/1.1.1/ESP32_GENERIC-v1.27.0-PEPEUNIT-v1.1.1.bin"},
+  {name = "ESP32_GENERIC_S3-v1.27.0-PEPEUNIT-v1.1.1.bin", link = "https://git.pepemoss.com/api/v4/projects/296/packages/generic/firmware/1.1.1/ESP32_GENERIC_S3-v1.27.0-PEPEUNIT-v1.1.1.bin"},
+  {name = "ESP32_GENERIC_C3-v1.27.0-PEPEUNIT-v1.1.1.bin", link = "https://git.pepemoss.com/api/v4/projects/296/packages/generic/firmware/1.1.1/ESP32_GENERIC_C3-v1.27.0-PEPEUNIT-v1.1.1.bin"}
+]
+stack = ["pepeunit_micropython_client"]
+version = "1.1.1"
+license = "AGPL v3 License"
+authors = [
+    {name = "Ivan Serebrennikov", email = "admin@silberworks.com"}
+]
+
+
+[images]
+schema = "https://minio.pepemoss.com/public-data/image/bmx280_and_mh-z19b.png"
+
+[physical_io]
+"client.settings.PIN_BMX_SCL" = "Вывод `SCL` шины `I2C` для датчика `BME280`/`BMP280`"
+"client.settings.PIN_BMX_SDA" = "Вывод `SDA` шины `I2C` для датчика `BME280`/`BMP280`"
+"client.settings.PIN_MH_Z19B_TX" = "Вывод `TX` `UART` для датчика `MH-Z19B`"
+"client.settings.PIN_MH_Z19B_RX" = "Вывод `RX` `UART` для датчика `MH-Z19B`"
+
+[env_description]
+FF_TYPE_WEATHER_SENSOR = "Тип датчика погоды: `bme` или `bmp`"
+FF_CO2_SENSOR_ENABLE = "Включить датчик CO2: `true` или `false`"
+FF_CO2_AUTOCORRECTION = "Включить автокалибровку (ABC) датчика CO2: `true` или `false`"
+FF_WEATHER_SENSOR_ENABLE = "Включить датчик погоды: `true` или `false`"
+PIN_BMX_SCL = "Номер пина `SCL` шины `I2C` для `BME280`/`BMP280`"
+PIN_BMX_SDA = "Номер пина `SDA` шины `I2C` для `BME280`/`BMP280`"
+PIN_MH_Z19B_TX = "Номер пина `TX` `UART` для `MH-Z19B`"
+PIN_MH_Z19B_RX = "Номер пина `RX` `UART` для `MH-Z19B`"
+PUBLISH_SEND_INTERVAL = "Интервал отправки показаний в миллисекундах"
+PUC_WIFI_SSID = "Имя сети `WiFi`"
+PUC_WIFI_PASS = "Пароль от сети `WiFi`"
+
+[topic_assignment]
+"co2_command/pepeunit" = "Принимает JSON-команду для датчика CO2 (входящий), например `{\"command\": \"zero_calibration\"}` для калибровки нулевой точки (400 ppm)"
+"temperature/pepeunit" = "Публикует значение температуры в °C (исходящий)"
+"pressure/pepeunit" = "Публикует значение атмосферного давления в Па (исходящий)"
+"humidity/pepeunit" = "Публикует значение влажности в % (исходящий, только для `BME280`)"
+"co2/pepeunit" = "Публикует концентрацию CO2 в ppm (исходящий)"
+"device_status/pepeunit" = "Публикует статус устройства в формате JSON: `{\"status\": \"measuring\"}` или `{\"status\": \"error\"}` (исходящий)"
+
+[work_algorithm]
+steps = [
+  "Подключение к `WiFi`",
+  "Подключение к `MQTT` Брокеру",
+  "Синхронизация времени по `NTP`",
+  "Инициализация датчика `BME280`/`BMP280` по `I2C` (если `FF_WEATHER_SENSOR_ENABLE` = `true`)",
+  "Инициализация датчика `MH-Z19B` по `UART` и настройка автокалибровки (если `FF_CO2_SENSOR_ENABLE` = `true`)",
+  "Подписка на входящие `MQTT` топики",
+  "Периодическое считывание показаний датчиков и публикация в соответствующие топики с интервалом `PUBLISH_SEND_INTERVAL`",
+  "При получении команды в `co2_command/pepeunit`: выполнение калибровки нулевой точки датчика `MH-Z19B`",
+  "Публикация статуса устройства (`measuring` или `error`) после каждого цикла измерений",
+  "Датчику `MH-Z19B` при работе в режиме автокалибровки, требуется хотябы 1 раз в день дышать свежим воздухом, они принимает минимальное значение за день как эталон 400 ppm"
+]
+
+[installation]
+steps = [
+  "Установите образ `Micropython` указанный в `firmware` на одну из платформ, например для `esp32` как это сделано в [руководстве](https://micropython.org/download/ESP32_GENERIC/)",
+  "Создайте `Unit` в `Pepeunit`",
+  "Установите переменные окружения в `Pepeunit`",
+  "Скачайте архив c программой из `Pepeunit`",
+  "Распакуйте архив в директорию",
+  "Загрузите файлы из директории на физическое устройство, например командой: `ampy -p /dev/ttyUSB0 -b 115200 put ./ .`",
+  "Запустить устройство нажатием кнопки `reset`"
+]
