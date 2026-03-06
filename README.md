@@ -5,7 +5,7 @@ Parameter | Implementation
 Description | Считывает температуру, давление и влажность с датчика `BME280`/`BMP280` по `I2C`, а также концентрацию `CO2` с датчика `MH-Z19B` по `UART`. Публикует показания в `MQTT` топики. Поддерживает команду калибровки нулевой точки `CO2` датчика
 Lang | `Micropython`
 Hardware | `esp32`, `esp32c3`, `esp32s3`, `BME280`, `BMP280`, `MH-Z19B`
-Firmware | [ESP32_GENERIC-v1.27.0-PEPEUNIT-v1.1.1.bin](https://git.pepemoss.com/api/v4/projects/296/packages/generic/firmware/1.1.1/ESP32_GENERIC-v1.27.0-PEPEUNIT-v1.1.1.bin), [ESP32_GENERIC_S3-v1.27.0-PEPEUNIT-v1.1.1.bin](https://git.pepemoss.com/api/v4/projects/296/packages/generic/firmware/1.1.1/ESP32_GENERIC_S3-v1.27.0-PEPEUNIT-v1.1.1.bin), [ESP32_GENERIC_C3-v1.27.0-PEPEUNIT-v1.1.1.bin](https://git.pepemoss.com/api/v4/projects/296/packages/generic/firmware/1.1.1/ESP32_GENERIC_C3-v1.27.0-PEPEUNIT-v1.1.1.bin)
+Firmware | [RELEASE-1.1.1](https://git.pepemoss.com/pepe/pepeunit/libs/pepeunit_micropython_client/-/releases/1.1.1)
 Stack | `pepeunit_micropython_client`
 Version | 1.1.1
 License | AGPL v3 License

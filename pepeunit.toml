@@ -4,9 +4,7 @@ description = "Считывает температуру, давление и в
 language = "Micropython"
 hardware = ["esp32", "esp32c3", "esp32s3", "BME280", "BMP280", "MH-Z19B"]
 firmware = [
-  {name = "ESP32_GENERIC-v1.27.0-PEPEUNIT-v1.1.1.bin", link = "https://git.pepemoss.com/api/v4/projects/296/packages/generic/firmware/1.1.1/ESP32_GENERIC-v1.27.0-PEPEUNIT-v1.1.1.bin"},
-  {name = "ESP32_GENERIC_S3-v1.27.0-PEPEUNIT-v1.1.1.bin", link = "https://git.pepemoss.com/api/v4/projects/296/packages/generic/firmware/1.1.1/ESP32_GENERIC_S3-v1.27.0-PEPEUNIT-v1.1.1.bin"},
-  {name = "ESP32_GENERIC_C3-v1.27.0-PEPEUNIT-v1.1.1.bin", link = "https://git.pepemoss.com/api/v4/projects/296/packages/generic/firmware/1.1.1/ESP32_GENERIC_C3-v1.27.0-PEPEUNIT-v1.1.1.bin"}
+  {name = "RELEASE-1.1.1", link = "https://git.pepemoss.com/pepe/pepeunit/libs/pepeunit_micropython_client/-/releases/1.1.1"}
 ]
 stack = ["pepeunit_micropython_client"]
 version = "1.1.1"
