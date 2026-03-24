@@ -17,33 +17,39 @@ Authors | Ivan Serebrennikov <admin@silberworks.com>
 
 ## Physical IO
 
-- `client.settings.PIN_BMX_SCL` - Вывод `SCL` шины `I2C` для датчика `BME280`/`BMP280`
-- `client.settings.PIN_BMX_SDA` - Вывод `SDA` шины `I2C` для датчика `BME280`/`BMP280`
-- `client.settings.PIN_MH_Z19B_TX` - Вывод `TX` `UART` для датчика `MH-Z19B`
-- `client.settings.PIN_MH_Z19B_RX` - Вывод `RX` `UART` для датчика `MH-Z19B`
+Key | Description
+-- | --
+`client.settings.PIN_BMX_SCL` | Вывод `SCL` шины `I2C` для датчика `BME280`/`BMP280`
+`client.settings.PIN_BMX_SDA` | Вывод `SDA` шины `I2C` для датчика `BME280`/`BMP280`
+`client.settings.PIN_MH_Z19B_TX` | Вывод `TX` `UART` для датчика `MH-Z19B`
+`client.settings.PIN_MH_Z19B_RX` | Вывод `RX` `UART` для датчика `MH-Z19B`
 
 ## Env variable assignment
 
-1. `FF_TYPE_WEATHER_SENSOR` - Тип датчика погоды: `bme` или `bmp`
-2. `FF_CO2_SENSOR_ENABLE` - Включить датчик CO2: `true` или `false`
-3. `FF_CO2_AUTOCORRECTION` - Включить автокалибровку (ABC) датчика CO2: `true` или `false`
-4. `FF_WEATHER_SENSOR_ENABLE` - Включить датчик погоды: `true` или `false`
-5. `PIN_BMX_SCL` - Номер пина `SCL` шины `I2C` для `BME280`/`BMP280`
-6. `PIN_BMX_SDA` - Номер пина `SDA` шины `I2C` для `BME280`/`BMP280`
-7. `PIN_MH_Z19B_TX` - Номер пина `TX` `UART` для `MH-Z19B`
-8. `PIN_MH_Z19B_RX` - Номер пина `RX` `UART` для `MH-Z19B`
-9. `PUBLISH_SEND_INTERVAL` - Интервал отправки показаний в миллисекундах
-10. `PUC_WIFI_SSID` - Имя сети `WiFi`
-11. `PUC_WIFI_PASS` - Пароль от сети `WiFi`
+Variable | Description
+-- | --
+`FF_TYPE_WEATHER_SENSOR` | Тип датчика погоды: `bme` или `bmp`
+`FF_CO2_SENSOR_ENABLE` | Включить датчик CO2: `true` или `false`
+`FF_CO2_AUTOCORRECTION` | Включить автокалибровку (ABC) датчика CO2: `true` или `false`
+`FF_WEATHER_SENSOR_ENABLE` | Включить датчик погоды: `true` или `false`
+`PIN_BMX_SCL` | Номер пина `SCL` шины `I2C` для `BME280`/`BMP280`
+`PIN_BMX_SDA` | Номер пина `SDA` шины `I2C` для `BME280`/`BMP280`
+`PIN_MH_Z19B_TX` | Номер пина `TX` `UART` для `MH-Z19B`
+`PIN_MH_Z19B_RX` | Номер пина `RX` `UART` для `MH-Z19B`
+`PUBLISH_SEND_INTERVAL` | Интервал отправки показаний в миллисекундах
+`PUC_WIFI_SSID` | Имя сети `WiFi`
+`PUC_WIFI_PASS` | Пароль от сети `WiFi`
 
 ## Assignment of Device Topics
 
-- `co2_command/pepeunit` - Принимает JSON-команду для датчика CO2 (входящий), например `{"command": "zero_calibration"}` для калибровки нулевой точки (400 ppm)
-- `temperature/pepeunit` - Публикует значение температуры в °C (исходящий)
-- `pressure/pepeunit` - Публикует значение атмосферного давления в Па (исходящий)
-- `humidity/pepeunit` - Публикует значение влажности в % (исходящий, только для `BME280`)
-- `co2/pepeunit` - Публикует концентрацию CO2 в ppm (исходящий)
-- `device_status/pepeunit` - Публикует статус устройства в формате JSON: `{"status": "measuring"}` или `{"status": "error"}` (исходящий)
+Topic | Description
+-- | --
+`co2_command/pepeunit` | Принимает JSON-команду для датчика CO2 (входящий), например `{"command": "zero_calibration"}` для калибровки нулевой точки (400 ppm)
+`temperature/pepeunit` | Публикует значение температуры в °C (исходящий)
+`pressure/pepeunit` | Публикует значение атмосферного давления в Па (исходящий)
+`humidity/pepeunit` | Публикует значение влажности в % (исходящий, только для `BME280`)
+`co2/pepeunit` | Публикует концентрацию CO2 в ppm (исходящий)
+`device_status/pepeunit` | Публикует статус устройства в формате JSON: `{"status": "measuring"}` или `{"status": "error"}` (исходящий)
 
 ## Work algorithm
 
