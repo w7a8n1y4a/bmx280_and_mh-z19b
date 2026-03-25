@@ -15,7 +15,7 @@ authors = [
 
 
 [images]
-schema = "https://minio.pepemoss.com/public-data/image/bmx280_and_mh-z19b.png"
+schema = "https://minio.pepemoss.com/public-data/schema/bmx280_and_mh-z19b.png"
 
 [physical_io]
 "client.settings.PIN_BMX_SCL" = "Вывод `SCL` шины `I2C` для датчика `BME280`/`BMP280`"
